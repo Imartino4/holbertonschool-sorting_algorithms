@@ -19,7 +19,7 @@ void selection_sort(int *array, size_t size)
 		{
 			if (aux1 > array[j])
 			{
-				aux1 = array[j]; 
+				aux1 = array[j];
 				j_aux =  j;
 				flag = 1;
 			}
