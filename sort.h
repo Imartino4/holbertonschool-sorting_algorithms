@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <stdbool.h>
 
 /**
  * struct listint_s - Doubly linked list node
@@ -26,7 +26,5 @@ void bubble_sort(int *, size_t);
 void insertion_sort_list(listint_t **);
 void selection_sort(int *, size_t);
 void quick_sort(int *, size_t);
-
-
 
 #endif

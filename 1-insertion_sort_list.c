@@ -1,27 +1,50 @@
 #include "sort.h"
-
 /**
- * insertion_sort_list - sorts a doubly linked listed list using insertion sort
+ * insertion_sort_list - sorts a doubly linked list
+ * Description: sorts a doubly linked list in ascending
+ * ordder using the insertion algorithm
  * @list: pointer to a listint_t doubly linked list
  */
-
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *aux1 = *list, *aux2;
+	bool flag = false;
+	listint_t *travel = NULL, *aux = NULL;
 
-	aux2 = aux1->next;
-	while (aux2)
+	if (!list || !(*list) || !(*list)->next)
+		return;
+
+	travel = *list;
+	while (travel->next)
 	{
-		if (aux2->n < aux1->n)
+		if (travel->n > travel->next->n)
 		{
-			aux2->prev = aux1->prev;
-			aux2->next = aux1->next;
-			if (aux2->next)
-				aux2->next->prev = aux1;
-			aux2->next = aux1;
-			aux1->prev = aux1;
+			travel->next->prev = travel->prev;
+			if (travel->next->prev)
+				travel->prev->next = travel->next;
+			else
+				*list = travel->next;
+
+			travel->prev = travel->next;
+			travel->next = travel->next->next;
+			travel->prev->next = travel;
+			if (travel->next)
+				travel->next->prev = travel;
+
+			travel = travel->prev;
 			print_list(*list);
+
+			if (travel->prev && travel->prev->n > travel->n)
+			{
+				if (!flag)
+					aux = travel->next;
+				flag = true;
+				travel = travel->prev;
+				continue;
+			}
 		}
+		if (!flag)
+			travel = travel->next;
+		else
+			travel = aux, flag = false;
 	}
 }
-
