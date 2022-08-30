@@ -7,42 +7,44 @@
  */
 void quick_sort(int *array, size_t size)
 {
-	int pivot = 0, aux2 = 0, flag = 0;
-	size_t i = 0, j = 0;
+	quicks(array, 0, size - 1, size);
+}
 
-	pivot = array[size - i];
-	while(i < size)
+void quicks(int *array, int min, int max, size_t size)
+{
+	int index = 0;
+/*Caso base cuando hay un único elemento -> min == max*/
+	while (min < max)
 	{
-		j = 0;
-		i = 0;
-		while (j < size)
-		{
-			pivot = array[size - 1];
-			if (array[j] < pivot)
-			{
-				i++;
-				flag = 1;
-			}
-			if (array[j] > pivot && flag == 1)
-			{
-				aux2 = array[i];
-				array[i] = array[j];
-				array[j] = aux2;
-				flag = 0;
-				print_array(array, size);
-			}
-			j++;
-			if (array[j] == array[size - 1] && flag == 0)
-			{
-				aux2 = array[i];
-				array[i] = array[j];
-				array[j] = aux2;
-				print_array(array, size);
-				i++;
-			}
-		}
+		index = lomuto_partition(array, min, max, size);
+		quicks(array, min, index - 1, size);
+		quicks(array, index + 1, max, size);
 	}
 }
-int lomuto_partion(int *array, int min, int max, size_t size)
-{
 
+int lomuto_partition(int *array, int min, int max, size_t size)
+{
+	int pivot = array[max], i = min - 1, j = min, temp = 0;
+
+	while (j < max)
+	{
+		if (array[j] <= pivot)
+		{
+			i++;
+			if (i < j)
+			{
+				printf("pivot = %d\n", pivot);
+				temp = array[j];
+				array[j] = array[i];
+				array[i] = temp;
+				print_array(array, size);
+			}
+		}
+		j++;
+	}
+	temp = array[max];
+	array[max] = array[i + 1];
+	array[i + 1] = temp;
+	print_array(array, size);
+	return (i + 1);
+}
