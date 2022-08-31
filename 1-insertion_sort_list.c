@@ -7,44 +7,48 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	bool flag = false;
-	listint_t *travel = NULL, *aux = NULL;
+	listint_t *aux1 = NULL, *aux2 = NULL;
 
-	if (!list || !(*list) || !(*list)->next)
-		return;
+	aux1 = *list;
 
-	travel = *list;
-	while (travel->next)
+	while (aux1)
 	{
-		if (travel->n > travel->next->n)
+		aux2 = aux1;
+		while (aux2->prev && aux2->n < aux2->prev->n)
 		{
-			travel->next->prev = travel->prev;
-			if (travel->next->prev)
-				travel->prev->next = travel->next;
-			else
-				*list = travel->next;
-
-			travel->prev = travel->next;
-			travel->next = travel->next->next;
-			travel->prev->next = travel;
-			if (travel->next)
-				travel->next->prev = travel;
-
-			travel = travel->prev;
+			swap(aux2->prev, aux2, list);
 			print_list(*list);
-
-			if (travel->prev && travel->prev->n > travel->n)
-			{
-				if (!flag)
-					aux = travel->next;
-				flag = true;
-				travel = travel->prev;
-				continue;
-			}
 		}
-		if (!flag)
-			travel = travel->next;
-		else
-			travel = aux, flag = false;
+		aux1 = aux1->next;
 	}
+
+}
+/**
+ * swap - swap 2 double linked list nodes
+ * @aux1: node
+ * @aux2: node
+ * @list: double pointer to double linked list
+ */
+
+void swap(listint_t *aux1, listint_t *aux2, listint_t **list)
+{
+	if (aux1->prev != NULL)
+	{
+		aux1->prev->next = aux2;
+		aux2->prev = aux1->prev;
+	}
+	if (aux2->next != NULL)
+	{
+		aux2->next->prev = aux1;
+		aux1->next = aux2->next;
+	}
+	if (aux2->next == NULL)
+		aux1->next = NULL;
+	if (aux1->prev == NULL)
+	{
+		*list = aux2;
+		aux2->prev = NULL;
+	}
+	aux1->prev = aux2;
+	aux2->next = aux1;
 }

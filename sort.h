@@ -28,5 +28,6 @@ void selection_sort(int *, size_t);
 void quick_sort(int *, size_t);
 void quicks(int *, int, int, size_t);
 int lomuto_partition(int*, int, int, size_t);
+void swap(listint_t *, listint_t *, listint_t **);
 
 #endif
