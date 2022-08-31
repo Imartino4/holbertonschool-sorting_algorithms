@@ -56,10 +56,12 @@ int lomuto_partition(int *array, int min, int max, size_t size)
 		}
 		j++;
 	}
-	temp = array[max];
-	array[max] = array[i + 1];
-	array[i + 1] = temp;
-	if (array[i] != array[max])/*Cuando queda partido por un elemento*/
+	if (i + 1 != max)
+	{
+		temp = array[max];
+		array[max] = array[i + 1];
+		array[i + 1] = temp;
 		print_array(array, size);
+	}
 	return (i + 1);
 }
